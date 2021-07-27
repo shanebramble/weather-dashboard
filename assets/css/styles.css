@@ -1,0 +1,11 @@
+header h1 
+{
+    text-align: center;
+}
+.current-weather{
+    border: 1px solid;
+}
+.search-btn{
+    display: flex;
+    margin: 0 auto;
+}
