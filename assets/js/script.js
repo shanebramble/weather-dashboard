@@ -3,7 +3,14 @@ var buttonEl = document.querySelector("button");
 var currentWeatherInfo = document.querySelector(".info");
 
 
-
+var getUVIndex = function (lat,lon){
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=379d1420e9fea3af7ba71fd81914bc2f")
+        .then (function (response) {
+            response.json().then(function (data) {
+                console.log(data);
+              });
+          });
+};
 
 
 var cityWeatherDetails = function(weatherData){
@@ -15,7 +22,11 @@ var cityWeatherDetails = function(weatherData){
     var humidity = document.createElement("p");
     humidity.innerHTML = "Humidity: " + Math.floor(weatherData.main.humidity) + "%";
     var uvIndex = document.createElement("p");
-    uvIndex.innerHTML = "UV Index: " + Math.floor(weatherData.visibility);
+
+    var currentUV = getUVIndex (weatherData.coord.lat,weatherData.coord.lon);
+
+    console.log("This is the current UV: " + currentUV);
+    uvIndex.innerHTML = "UV Index: " + currentUV;
  
     $(".info").append(temp,wind,humidity,uvIndex);
     
