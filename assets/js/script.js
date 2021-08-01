@@ -16,6 +16,7 @@ var getWeatherDetails = function (lat, lon) {
 };
 
 var fiveDayForecast = function (data) {
+    fiveDaySectionEl.innerHTML = "";
     for (var i = 0; i < (data.daily.length - 3); i++) {
 
         // Convert Unix Time into Local Date Format
@@ -46,16 +47,19 @@ var fiveDayForecast = function (data) {
         // Daily Humidy 
         var dailyHumidity = document.createElement("p");
         dailyHumidity.classList.add("card-text");
-        dailyHumidity.innerHTML = "Humidity: "+ data.daily[i].humidity + "%";
+        dailyHumidity.innerHTML = "Humidity: " + data.daily[i].humidity + "%";
 
         // Appending all elements to their appropriate sections.
-        $(dailyDivInfo).append(dailyDate,dailyTemp,dailyWind,dailyHumidity);
-        $(dailyDivEl).append(dailyImgEl,dailyDivInfo);
+        $(dailyDivInfo).append(dailyDate, dailyTemp, dailyWind, dailyHumidity);
+        $(dailyDivEl).append(dailyImgEl, dailyDivInfo);
         $(fiveDaySectionEl).append(dailyDivEl);
     }
 };
 
 var cityWeatherDetails = function (weatherData) {
+     $(".info").empty();
+    //  $(".info").textContent = "";
+
     // Create elements to display the current temperatures.
     var temp = document.createElement("p");
     temp.innerHTML = "Temp: " + Math.floor(weatherData.current.temp) + "°F";
@@ -89,13 +93,15 @@ var cityWeatherDetails = function (weatherData) {
 };
 
 var generateWeather = function () {
+
     var city = inputEl.value;
+    inputEl.value = ""
+
     // Fetch the data for the current weather from the input field.
     fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=379d1420e9fea3af7ba71fd81914bc2f")
         .then(function (response) {
             response.json().then(function (data) {
 
-                // currentWeatherEl.textContent = "";
                 var cityTitle = document.querySelector(".city-name");
                 var currentDate = moment().format('L')
                 cityTitle.innerHTML = city + " " + "(" + currentDate + ")";
