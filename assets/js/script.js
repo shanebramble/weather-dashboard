@@ -3,7 +3,26 @@ var buttonEl = document.querySelector("button");
 var currentWeatherInfo = document.querySelector(".info");
 var fiveDaySectionEl = document.querySelector(".five-day-section");
 var currentWeatherEl = document.querySelector(".current-weather");
+var recentSearches = [];
 
+var saveSearchHistory = function (cityArray) {
+    localStorage.setItem("city", JSON.stringify(cityArray));
+};
+
+// var loadSearchHistory = function (){
+
+//      var savedHistory = JSON.parse(localStorage.getItem("city"));
+//      console.log(savedHistory);
+//      for (var i = 0; i < savedHistory.length; i++){
+//          var recentSearchBtn = document.createElement("button");
+//          recentSearchBtn.classList.add("btn btn-secondary");
+//          recentSearchBtn.textContent = savedHistory[i];
+
+
+//          $(".recently-search-container").append(recentSearchBtn);
+
+//      }
+// };
 
 var getWeatherDetails = function (lat, lon) {
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=379d1420e9fea3af7ba71fd81914bc2f")
@@ -58,9 +77,9 @@ var fiveDayForecast = function (data) {
 };
 
 var cityWeatherDetails = function (weatherData) {
-    
+
     // clear old data
-     $(".info").empty();
+    $(".info").empty();
 
     // Create elements to display the current temperatures.
     var temp = document.createElement("p");
@@ -97,6 +116,8 @@ var cityWeatherDetails = function (weatherData) {
 var generateWeather = function () {
 
     var city = inputEl.value;
+    recentSearches.push(city);
+    saveSearchHistory(recentSearches);
     inputEl.value = ""
 
     // Fetch the data for the current weather from the input field.
@@ -116,3 +137,5 @@ var generateWeather = function () {
 };
 
 buttonEl.addEventListener("click", generateWeather);
+
+// loadSearchHistory();
