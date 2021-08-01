@@ -16,6 +16,7 @@ var getWeatherDetails = function (lat, lon) {
 };
 
 var fiveDayForecast = function (data) {
+    // Clear old data.
     fiveDaySectionEl.innerHTML = "";
     for (var i = 0; i < (data.daily.length - 3); i++) {
 
@@ -57,8 +58,9 @@ var fiveDayForecast = function (data) {
 };
 
 var cityWeatherDetails = function (weatherData) {
+    
+    // clear old data
      $(".info").empty();
-    //  $(".info").textContent = "";
 
     // Create elements to display the current temperatures.
     var temp = document.createElement("p");
